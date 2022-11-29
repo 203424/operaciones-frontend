@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap');
+
+:root{
+    --primary-color: #2B32B2;
+    --secondary-color: #1488CC;
+    --white: #ffffff;
+    --black: #000000;
+    --success-color: #02CA52;
+    --error-color: #D60000;
+}
+
+*{
+    padding: 0;
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+input, select{
+    border-color: var(--secondary-color) !important;
+}
+
+input:focus, select:focus{
+    border-color: var(--primary-color) !important;
+}
+
+.text-regular{
+    font-size: 23px;
+    font-weight: 400;
+}
+
+.text-m-23{
+    font-weight: 500;
+    font-size: 23px;
+}
+
+.text-m-22{
+    font-weight: 500;
+    font-size: 22px;
+}
+
+.text-bold{
+    font-weight: 700;
+    font-size: 23px;
+}
+
+.txt-success{
+    color: var(--success-color);
+}
+
+.txt-error{
+    color: var(--error-color);
+}
+
+.btn-submit{
+    width: 50%;
+    background-color: var(--secondary-color);
+    color: var(--white);
+}
+
+.btn-submit:hover{
+    background-color: var(--white);
+    color: var(--secondary-color);
+}
+
+.div-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-success{
+    border-color: var(--success-color) !important;
+    background-color: #02CA5230 !important;
+}
+
+.input-error{
+    border-color: var(--error-color) !important;
+    background-color: #D6000030 !important;
+}
