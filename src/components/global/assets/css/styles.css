@@ -23,6 +23,32 @@ input:focus, select:focus{
     border-color: var(--primary-color) !important;
 }
 
+.logo{
+    mix-blend-mode: multiply;
+    margin-left: 18px;
+    height: 45px;
+}
+
+.dropdown-navbar{
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown-navbar::after{
+    align-items: center;
+    width: 10px;
+    content: "";
+    border-top: 0.4em solid;
+    border-right: 0.4em solid transparent;
+    border-bottom: 0;
+    border-left: 0.4em solid transparent;
+}
+
+.navbar-temas{
+    display: grid;
+    grid-template-columns: repeat(8,1fr);
+}
+
 .text-regular{
     font-size: 23px;
     font-weight: 400;
@@ -52,7 +78,7 @@ input:focus, select:focus{
 }
 
 .btn-submit{
-    width: 50%;
+    width: 100%;
     background-color: var(--secondary-color);
     color: var(--white);
 }

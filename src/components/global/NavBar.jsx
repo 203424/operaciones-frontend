@@ -1,24 +1,114 @@
-import React from 'react'
+import React from "react";
+import * as bootstrap from 'bootstrap';
+import logo from "./assets/assets/img/logo_up.jpg";
+import './assets/css/styles.css';
+import { Link } from "react-router-dom";
 
 const NavBar = () => {
-    return (
-        <nav className="navbar navbar-expand-lg bg-secondary bg-secondary fixed-top" id="mainNav">
-            <div className="container">
-                <a className="navbar-brand" href="#page-top">Start Bootstrap</a>
-                {/* <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                    Menu
-                    <i className="fas fa-bars"></i>
+
+    const showNav = () =>{
+        if (document.getElementById("navbarNavDropdown").classList.contains("show")){
+            document.getElementById("navbarNavDropdown").classList.remove("show")
+        }else{
+            document.getElementById("navbarNavDropdown").classList.add("show")
+        }
+    }
+
+	return (
+        <nav className="navbar navbar-expand-lg">
+            <div className="container-fluid">
+                <img src={logo} alt="Logo"  className="d-inline-block align-text-top logo"/>
+                <a className="navbar-brand" href="/">Title</a>
+                <button className="navbar-toggler" type="button" onClick={() => showNav()}>
+                    <span className="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ms-auto">
-                        <li className="nav-item mx-0 mx-lg-1"><a className="nav-link py-3 px-0 px-lg-3 rounded" href="#portfolio">Portfolio</a></li>
-                        <li className="nav-item mx-0 mx-lg-1"><a className="nav-link py-3 px-0 px-lg-3 rounded" href="#about">About</a></li>
-                        <li className="nav-item mx-0 mx-lg-1"><a className="nav-link py-3 px-0 px-lg-3 rounded" href="#contact">Contact</a></li>
+                <div className="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul className="navbar-nav">
+                        <li className="nav-item dropdown">
+                            <a className="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Notación
+                            </a>
+                            <ul className="dropdown-menu">
+                                <li><Link className="dropdown-item" to="/">Seccion 1</Link></li>
+                                <li><Link className="dropdown-item" to="/">Seccion 2</Link></li>
+                                <li><Link className="dropdown-item" to="/">Seccion 3</Link></li>
+                            </ul>
+                        </li>
+                        <li className="nav-item dropdown">
+                            <a className="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Operaciones de conjuntos
+                            </a>
+                            <ul className="dropdown-menu">
+                                <li><Link className="dropdown-item" to="/operaciones">Modo tutor</Link></li>
+                                <li><Link className="dropdown-item" to="operaciones/quiz">Quiz</Link></li>
+                                <li><Link className="dropdown-item" to="operaciones/ejercicios">Ejercicios</Link></li>
+                            </ul>
+                        </li>
+                        <li className="nav-item dropdown">
+                            <a className="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Relaciones de conjuntos
+                            </a>
+                            <ul className="dropdown-menu">
+                                <li><Link className="dropdown-item" to="/">Seccion 1</Link></li>
+                                <li><Link className="dropdown-item" to="/">Seccion 2</Link></li>
+                                <li><Link className="dropdown-item" to="/">Seccion 3</Link></li>
+                            </ul>
+                        </li>
+                        <li className="nav-item dropdown">
+                            <a className="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Conjunto potencia
+                            </a>
+                            <ul className="dropdown-menu">
+                                <li><Link className="dropdown-item" to="/">Seccion 1</Link></li>
+                                <li><Link className="dropdown-item" to="/">Seccion 2</Link></li>
+                                <li><Link className="dropdown-item" to="/">Seccion 3</Link></li>
+                            </ul>
+                        </li>
+                        <li className="nav-item dropdown">
+                            <a className="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Producto cartesiano
+                            </a>
+                            <ul className="dropdown-menu">
+                                <li><Link className="dropdown-item" to="/">Seccion 1</Link></li>
+                                <li><Link className="dropdown-item" to="/">Seccion 2</Link></li>
+                                <li><Link className="dropdown-item" to="/">Seccion 3</Link></li>
+                            </ul>
+                        </li>
+                        <li className="nav-item dropdown">
+                            <a className="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Familia de conjunto
+                            </a>
+                            <ul className="dropdown-menu">
+                                <li><Link className="dropdown-item" to="/">Seccion 1</Link></li>
+                                <li><Link className="dropdown-item" to="/">Seccion 2</Link></li>
+                                <li><Link className="dropdown-item" to="/">Seccion 3</Link></li>
+                            </ul>
+                        </li>
+                        <li className="nav-item dropdown">
+                            <a className="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Leyes
+                            </a>
+                            <ul className="dropdown-menu">
+                                <li><Link className="dropdown-item" to="/">Seccion 1</Link></li>
+                                <li><Link className="dropdown-item" to="/">Seccion 2</Link></li>
+                                <li><Link className="dropdown-item" to="/">Seccion 3</Link></li>
+                            </ul>
+                        </li>
+                        <li className="nav-item dropdown">
+                            <a className="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Particiones
+                            </a>
+                            <ul className="dropdown-menu">
+                                <li><Link className="dropdown-item" to="/">Seccion 1</Link></li>
+                                <li><Link className="dropdown-item" to="/">Seccion 2</Link></li>
+                                <li><Link className="dropdown-item" to="/">Seccion 3</Link></li>
+                            </ul>
+                        </li>
                     </ul>
-                </div> */}
+                </div>
             </div>
         </nav>
-    )
-}
+	);
+};
 
-export default NavBar
+export default NavBar;
