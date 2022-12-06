@@ -8,6 +8,6 @@ export const validarCinta = ({el,setEl}) => { //valida que el contenido de la ci
         document.getElementById("msg-"+el.target.id).textContent = ""
     }else{
         setEl("")
-        document.getElementById("msg-"+el.target.id).textContent = "No cumple con una notación válida"
+        document.getElementById("msg-"+el.target.id).textContent = "No cumple con la notación extensiva de conjuntos"
     }
 }

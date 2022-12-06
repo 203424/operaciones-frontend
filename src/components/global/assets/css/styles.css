@@ -22,7 +22,9 @@ input, select{
 input:focus, select:focus{
     border-color: var(--primary-color) !important;
 }
-
+select option:hover{
+    color: red
+}
 .logo{
     mix-blend-mode: multiply;
     margin-left: 18px;
@@ -102,4 +104,8 @@ input:focus, select:focus{
 .input-error{
     border-color: var(--error-color) !important;
     background-color: #D6000030 !important;
+}
+
+.show{
+    display: none;
 }

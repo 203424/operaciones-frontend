@@ -6,36 +6,49 @@ import { validarCinta } from './helpers/cinta';
 
 const EjerciciosOp = () => {
 
-    const [ejercicio,setEjercicio] = useState(undefined)
+    const [ejercicio,setEjercicio] = useState({c1:"",c2:"",operador:""})
     const [respuesta,setRespuesta] = useState("")
+    const [resultado,setResultado] = useState(undefined)
 
     useEffect(()=>{
         handleRequest()
     },[])
 
-    let txt_ejercicio_conjuntos = ''
+    useEffect(()=>{
+        generarEjercicio()
+    },[ejercicio])
 
     const handleRequest = async() => {
-        await axiosInstance.get('operaciones/ejercicio/')
+        await axiosInstance.get('operaciones/ejercicio/random/')
         .then(resp => {
             setEjercicio(resp.data)
-            document.getElementById("form").style = "display:none"
         })
         .catch(err => console.log('error: ',err))
     }
 
-    const generarEjercicio = () =>{
-        if (ejercicio.operacion === "complemento"){
-            txt_ejercicio_conjuntos = "Dados el conjunto Universal U="+ejercicio.c1+" y el conjunto A="+ejercicio.c2+", calcula el valor de A'"
-        }else{
-            txt_ejercicio_conjuntos = "Dados dos conjuntos A="+ejercicio.c1+" y B="+ejercicio.c2+", calcule la "+ejercicio.operacion 
-        }
-        document.getElementById("ejercicio").value = txt_ejercicio_conjuntos
-        document.getElementById("form").style = "display:default"
-        console.log(txt_ejercicio_conjuntos);
-    }
+    const generarEjercicio = () =>{        
+        document.getElementById("ejercicio").textContent = ejercicio.operador === 773 ? "Dados el conjunto Universal " : "Dados los conjuntos "
+        let conjunto1 = document.createElement('span')
+        conjunto1.textContent = ejercicio.operador === 773 ? "U="+ejercicio.c1 : "A="+ejercicio.c1 
+        conjunto1.className = "text-bold"
+        let text1 = document.createTextNode(" y el conjunto ")
+        let conjunto2 = document.createElement('span')
+        conjunto2.textContent = ejercicio.operador === 773 ? "A="+ejercicio.c2 : "B="+ejercicio.c2 
+        conjunto2.className = "text-bold"
+        let text2 = document.createTextNode(", calcule ")
+        let operadorTxt = document.createElement('span')
+        operadorTxt.textContent = ejercicio.operador === 773 ? ("A"+String.fromCharCode(ejercicio.operador)) : ("A "+String.fromCharCode(ejercicio.operador)+" B")
+        operadorTxt.className = "text-bold"
 
+        document.getElementById("ejercicio").appendChild(conjunto1)
+        document.getElementById("ejercicio").append(text1)
+        document.getElementById("ejercicio").appendChild(conjunto2)
+        document.getElementById("ejercicio").append(text2)
+        document.getElementById("ejercicio").appendChild(operadorTxt)
+    }
+    
     const calcular = async() =>{
+        const urlOperaciones = { 8746:'union/', 8745:'interseccion/',45:'dif_rel/',916:'dif_sim/',773:'complemento/'}
         let data
 
         data = {
@@ -44,11 +57,40 @@ const EjerciciosOp = () => {
             respuesta: respuesta
         }
 
-        await axiosInstance.post('operaciones/'+ejercicio.operacion+"/",data)
+        let resultContainer = document.getElementById("container-result").classList
+        let resultInput = document.getElementById("resultado").classList
+        await axiosInstance.post('operaciones/'+urlOperaciones[ejercicio.operador],data)
         .then(resp => {
             console.log(resp)
+            setResultado(resp.data)
+            if (resultContainer.contains("show")){
+                resultContainer.remove("show")
+            }
+            if (resultInput.contains("txt-error")){
+                resultInput.replace("txt-error","txt-success")
+            }
+            if (resultInput.contains("input-error")){
+                resultInput.replace("input-error","input-success")
+            }
         })
-        .catch(err => console.log('error: ', err))
+        .catch(err => {
+            console.log('error: ', err.response.data)
+            setResultado("Respuesta correcta: " + err.response.data)
+            resultInput.add("txt-error")
+                resultInput.add("input-error")
+                if(resultContainer.contains("show")){
+                    resultContainer.remove("show")
+                }
+        })
+    }
+
+    const generar_otro = () =>{
+        handleRequest()
+        generarEjercicio()
+        setRespuesta("")
+        document.getElementById("respuesta").value = ""
+        let resultContainer = document.getElementById("container-result").classList
+        resultContainer.add("show")
     }
 
     const onSubmit = (e) => {
@@ -58,23 +100,24 @@ const EjerciciosOp = () => {
 
     return (
         <div className='container position-absolute top-50 start-50 translate-middle'>
-            <button className="btn btn-primary btn-submit text-bold mb-3 rounded-3" id="btn-calcular" onClick={() => generarEjercicio()}>Generar Ejercicio</button>
-            {ejercicio !== "" ?
-                <form className='mt-5 row justify-content-center' onSubmit={onSubmit} id="form">
-                    <div className='col-lg-12 mb-3'>
-                        <label className="form-label text-bold">Ejercicio: </label>
-                        <input className="form-control rounded-3 text-bold" id="ejercicio" disabled/>
-                    </div>
-                    <div className='col mb-3'>
-                        <label className="form-label text-bold">Respuesta: </label>
-                        <input type="text" className="form-control rounded-3 text-regular" id="respuesta" onChange={(e) => validarCinta({el:e,setEl:setRespuesta})} onBlur={(e) => validarCinta({el:e,setEl:setRespuesta})}/>
-                        <p className='text-m-22 txt-error' id="msg-respuesta"></p>
-                    </div>
-                    <div className='col-lg-6 mb-3 align-self-end'>
-                        <button className="btn btn-primary btn-submit text-bold mb-3 rounded-3" id="btn-calcular">Calcular</button>
-                    </div>
-                </form> :
-            <></>}
+            <form className='mt-5 row justify-content-center' onSubmit={onSubmit} id="form">
+                <div className='col-lg-12 mb-3'>
+                    <label className="form-label text-bold">Ejercicio: </label>
+                    <p className='text-regular' id="ejercicio"></p>
+                </div>
+                <div className='col mb-3'>
+                    <label className="form-label text-bold">Respuesta: </label>
+                    <input type="text" className="form-control rounded-3 text-regular" id="respuesta" onChange={(e) => validarCinta({el:e,setEl:setRespuesta})} onBlur={(e) => validarCinta({el:e,setEl:setRespuesta})}/>
+                    <p className='text-m-22 txt-error' id="msg-respuesta"></p>
+                </div>
+                <div className='col-lg-6 mb-3 align-self-end'>
+                    <button className="btn btn-primary btn-submit text-bold mb-3 rounded-3" id="btn-calcular">Calcular</button>
+                </div>
+            </form>
+            <div className='container show' id="container-result">
+                <input className="form-control rounded-3 text-bold txt-error input-error mb-3" id="resultado" disabled value={resultado}/>
+                <button className="btn btn-primary btn-submit text-bold mb-3 rounded-3" id="btn-generar" onClick={() => generar_otro()}>Generar otro ejercicio</button>
+            </div>
         </div>
     )
 }
